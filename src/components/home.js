@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage, faFileAudio } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faFileAudio, faComment } from '@fortawesome/free-solid-svg-icons';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useDropzone } from 'react-dropzone';
@@ -9,6 +9,7 @@ import AuthContext from './AuthContext';
 import './home.css';
 import { useEffect } from 'react';
 import Avatar from "./avatar.jpeg"
+import PostComponent from './comment';
 
 function Home() {
     const { isLoggedIn } = useContext(AuthContext);
@@ -17,6 +18,17 @@ function Home() {
     const [files, setFiles] = useState([]);
     const [blogs, setBlogs] = useState([]);
     const [users, setUsers] = useState([]);
+    const [activeCommentView, setActiveCommentView] = useState(null);
+
+    const samplePost = {
+        id: 1,
+        comments: [
+            { id: 1, text: 'Comment 1' },
+            { id: 2, text: 'Comment 2' },
+           
+        ],
+    };
+
 
     const serverURL = 'http://127.0.0.1:5000/api/blog';
     useEffect(() => {
@@ -185,6 +197,7 @@ function Home() {
                     <source src={post.audio_url} />
                 </audio>
             )}
+            <PostComponent post={samplePost} />
         </div>
     ));
 

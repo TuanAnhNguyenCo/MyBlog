@@ -60,6 +60,7 @@ button:hover {
 
 .blog-item p {
     color: #666;
+    text-align: left;
 }
 
 .image-preview {

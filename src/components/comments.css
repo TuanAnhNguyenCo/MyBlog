@@ -1,0 +1,113 @@
+.comment-input {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.comment-input .comment-box {
+    flex-grow: 1;
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    padding: 8px 12px;
+    margin-right: 10px;
+}
+
+.comment-input .comment-btn {
+    background-color: #4267B2;
+    color: white;
+    border: none;
+    border-radius: 18px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.comment-input .comment-btn:hover {
+    background-color: #365899;
+}
+
+.comment-summary {
+    cursor: pointer;
+    color: #4267B2;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.comment-summary:hover {
+    text-decoration: underline;
+}
+
+.comment {
+    margin-bottom: 8px;
+    /* Add more styles as needed */
+}
+
+.comments-section {
+    /* ... các kiểu dáng khác */
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-summary {
+    /* ... các kiểu dáng khác */
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* Đưa nút phải cùng phía phải */
+}
+
+.comment-container {
+    display: flex;
+    align-items: left;
+    margin-bottom: 8px;
+}
+
+.comment-input-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+    transition: justify-content 0.3s ease;
+    /* Hiệu ứng animation */
+}
+
+.user-avatar {
+    width: 40px;
+    /* Điều chỉnh kích thước avatar tùy theo ý muốn */
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.comment-content {
+    background-color: #f0f0f0;
+    /* Màu xám nhạt cho khung bình luận */
+    padding: 10px;
+    border-radius: 8px;
+    flex-grow: 1;
+    text-align: left;
+}
+
+.comment-box {
+    flex-grow: 1;
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    padding: 8px 12px;
+    margin-right: 10px;
+    transition: flex-grow 0.3s ease;
+    /* Hiệu ứng animation */
+}
+
+.comment-box.expanded {
+    flex-grow: 3;
+   
+}
+
+.comment-summary:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,122 @@
+/* header.css */
+.main-header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    margin-right: 10px;
+}
+
+.nav-links {
+    display: flex;
+    /* gap: 10px; */
+    /* Decreased gap to move "Home" link closer to the logo */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+    height: 100%;
+}
+
+.nav-links {
+    margin-right: auto;
+    /* Đẩy các link sang trái */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+    border: 1px solid #ddd;
+    /* Add a border */
+    border-radius: 5px;
+    /* Add rounded corners */
+    transition: background-color 0.3s ease;
+    /* Add a smooth transition on hover */
+}
+
+.nav-links a:hover {
+    background-color: #ddd;
+    /* Add a background color on hover */
+}
+
+.logout-button {
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+
+.logout-button:hover {
+    background-color: #45a049;
+}
+
+.logout-options {
+    position: absolute;
+    top: 45px;
+    /* Adjust as needed */
+    right: 10px;
+    /* Adjust as needed */
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logout-options button {
+    padding: 5px 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.logout-options button:hover {
+    background-color: #45a049;
+}
+
+/* header.css */
+
+header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    margin-right: 10px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+}
+
+nav a {
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+}
+
+nav a:hover {
+    background-color: #ddd;
+    /* Add a background color on hover */
+    border-radius: 5px;
+    /* Optional: Add rounded corners on hover */
+}

@@ -25,6 +25,10 @@ function Home() {
         comments: [
             { id: 1, text: 'Comment 1' },
             { id: 2, text: 'Comment 2' },
+            { id: 3, text: 'Comment 1' },
+            { id: 4, text: 'Comment 2' },
+            { id: 5, text: 'Comment 1' },
+            { id: 6, text: 'Comment 2' },
            
         ],
     };
@@ -197,7 +201,10 @@ function Home() {
                     <source src={post.audio_url} />
                 </audio>
             )}
-            <PostComponent post={samplePost} />
+            
+            <hr style={{ marginBottom: "20px",marginTop:"20px" }} />
+          
+            <PostComponent post={samplePost} content={post} users = {users} />
         </div>
     ));
 

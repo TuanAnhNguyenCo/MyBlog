@@ -27,7 +27,7 @@ def getCommentByIDs(id):
     comments_list = []
 
     matching_comments = comments.loc[comments['blog_id']
-                                     == id].to_numpy().tolist()
+                                     == id].to_numpy().tolist()[::-1]
 
     # Iterate through the comments and update the username
 
@@ -36,7 +36,7 @@ def getCommentByIDs(id):
         account_info = accounts.loc[accounts['id']
                                     == cm[1]].values
         if len(account_info) > 0:
-            cm[1] = str(account_info[0])
+            cm[1] = str(account_info[0][1])
 
     # Extend the comments_list with the updated comments
     comments_list.extend(matching_comments)
@@ -47,15 +47,19 @@ def getCommentByIDs(id):
 @app.route('/api/blog', methods=['GET'])
 def hello():
     blog_list = []
-    for i, blog in blogs.iterrows():
-       
+    # Lấy số lượng dòng trong DataFrame
+    num_rows = blogs.shape[0]
+
+    # Lặp qua DataFrame từ cuối file lên
+    for i in range(num_rows - 1, -1, -1):
+        blog = blogs.iloc[i]
         blog_list.append(
             {
-                'id': blog['id'],
-                'user_id': blog['user_id'],
+                'id': int(blog['id']),
+                'user_id': int(blog['user_id']),
                 'title': blog['title'],
                 'content': blog['content'],
-                'comments': getCommentByIDs(blog['id']),
+                'comments': getCommentByIDs(int(blog['id'])),
                 # Replace with your actual URL
                 'img_url': blog['img_url'] if blog['img_url'] != "NULL" else "",
                 "audio_url": blog['audio_url'] if blog['audio_url'] != "NULL" else ""
@@ -83,15 +87,13 @@ def check_account():
     # Get account details from the request
     account_data = request.json
     if len(accounts.loc[(accounts['username'] == account_data['username']) & (accounts['password'] == str(account_data['password']))]) != 0:
-        
-       
+
         id = accounts.loc[(accounts['username'] == account_data['username']) & (
             accounts['password'] == str(account_data['password']))]['id']
         response = {'status': 'success',
                     'message': 'Account is valid',
                     'id': str(id.iloc[0])}
-       
-        
+
     else:
         response = {'status': 'error',
                     'message': 'Invalid account',
@@ -135,7 +137,6 @@ def create_blog():
         "audio_url": base_url + audio_url
     })
     blogs.to_json("blogs.json")
-   
 
     # Process the data and files here (e.g., store in a database)
 
@@ -146,17 +147,17 @@ def create_blog():
 
 @app.route('/api/create-comment', methods=['POST'])
 def create_comment():
-   
+
     # Retrieve data from the request
     user_id = request.json.get('user_id')
     blog_id = request.json.get('blog_id')
     content = request.json.get('content')
-   
+
     comments.loc[len(comments)] = pd.Series({
         'id': comments['id'].max() + 1 if len(comments) != 0 else 1,
         'user_id':  int(user_id),
         'blog_id': blog_id,  # Replace with your actual title
-        'content': content,  # Replace with your actual content        
+        'content': content,  # Replace with your actual content
     })
     comments.to_json("comments.json")
 
@@ -171,13 +172,13 @@ def create_comment():
 def create_account():
 
     # Retrieve data from the request
-    username = request.json.get('username')    
-   
+    username = request.json.get('username')
+
     if len(accounts.loc[accounts['username'] == username]) == 0:
         accounts.loc[len(accounts)] = pd.Series({
             'id': accounts['id'].max() + 1 if len(accounts) != 0 else 1,
-            'username':username,
-            "password":str(1)
+            'username': username,
+            "password": str(1)
         })
         accounts.to_json("account.json")
 

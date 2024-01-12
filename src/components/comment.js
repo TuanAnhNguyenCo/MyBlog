@@ -16,7 +16,7 @@ const PostComponent = ({ content, users, isUpdated, setIsUpdated }) => {
     const items = [
         {
             label: (
-                <span onClick={(e) => handleDeleteComment(e )} >Delete</span>
+                <span onClick={(e) => handleDeleteComment(e)} >Delete</span>
             ),
             key: '0',
         }]
@@ -24,7 +24,27 @@ const PostComponent = ({ content, users, isUpdated, setIsUpdated }) => {
     const handleDeleteComment = (event) => {
         event.preventDefault();
         var id = localStorage.getItem("RemoveID")
-        console.log("delete ",id)
+        var formData = {
+            id: id,
+        }
+        const response = fetch('http://127.0.0.1:5000/api/comments/remove', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (response) {
+            console.log('Comment created successfully');
+            setIsUpdated(!isUpdated)
+
+
+            // Handle success, e.g., update your state or redirect to another page
+        } else {
+            console.error('Failed to create blog post');
+            // Handle the error, e.g., show an error message to the user
+        }
     }
 
     const handleCommentSubmit = (event) => {
@@ -114,26 +134,26 @@ const PostComponent = ({ content, users, isUpdated, setIsUpdated }) => {
                             <img src="avatar.jpeg" alt="User Avatar" className="user-avatar" />
                             <div className="comment-content">
                                 <div style={{ marginLeft: "97%" }}>
-                                {localStorage.getItem("id") == content.user_id
-                                    ?
-                                    <Dropdown
-                                        placement='bottomLeft'
-                                        menu={{
-                                            items,
-                                        }}>
-                                        <a onClick={(e) => {
-                                            e.preventDefault();
-                                            localStorage.setItem("RemoveID", p[0])
-                                        }}>
-                                            <Space>
-                                                <FontAwesomeIcon icon={faBars}/>
-                                            </Space>
-                                        </a>
-                                    </Dropdown>
-                                    :
-                                    <></>
+                                    {localStorage.getItem("id") == content.user_id
+                                        ?
+                                        <Dropdown
+                                            placement='bottomLeft'
+                                            menu={{
+                                                items,
+                                            }}>
+                                            <a onClick={(e) => {
+                                                e.preventDefault();
+                                                localStorage.setItem("RemoveID", p[0])
+                                            }}>
+                                                <Space style={{ cursor: "pointer" }}>
+                                                    <FontAwesomeIcon icon={faBars} />
+                                                </Space>
+                                            </a>
+                                        </Dropdown>
+                                        :
+                                        <></>
                                     }
-                                    </div>
+                                </div>
                                 <p style={{ marginTop: '-7px', fontWeight: 'bold' }}>{p[1]}</p>
                                 <p className="comment-text">{p[3]}</p>
                             </div>
@@ -172,18 +192,18 @@ const PostComponent = ({ content, users, isUpdated, setIsUpdated }) => {
 
                             {localStorage.getItem("id") == content.user_id
                                 ?
-                                <Dropdown
+                                <Dropdown 
                                     placement='bottomLeft'
                                     menu={{
                                         items,
                                     }}>
                                     <a onClick={(e) => {
                                         e.preventDefault();
-                                        localStorage.setItem("RemoveID", content.comments[content.comments.length - 1][0])
+                                        localStorage.setItem("RemoveID", content.comments[0][0])
                                     }}>
-                                        <Space>
+                                        <Space style={{cursor:"pointer"}}>
                                             <FontAwesomeIcon icon={faBars}
-                                                
+
                                             />
                                         </Space>
                                     </a>
@@ -193,7 +213,7 @@ const PostComponent = ({ content, users, isUpdated, setIsUpdated }) => {
                             }
                         </div>
                         <p style={{ marginTop: '-7px', fontWeight: 'bold' }} >{content.comments[content.comments.length - 1][1]}</p>
-                        <p className="comment-text">{content.comments[content.comments.length - 1][3]}</p>
+                        <p className="comment-text">{content.comments[0][3]}</p>
                     </div>
                 </div>
             ) : null}

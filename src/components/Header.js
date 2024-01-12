@@ -4,17 +4,23 @@ import { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import AuthContext from './AuthContext';
+
+
 import './header.css';
 
 function Header() {
     const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
     const [showLogout, setShowLogout] = useState(false);
 
+
     const handleLogout = () => {
+        window.sessionStorage.removeItem("access_token");
+        window.sessionStorage.removeItem("nama");
         // Add logic to perform logout (e.g., clear token, redirect to login page)
         setIsLoggedIn(false); // Set isLoggedIn state to false
         localStorage.removeItem('username')
         localStorage.removeItem('password')
+
     };
 
     return (
@@ -29,7 +35,7 @@ function Header() {
                     </>
                 )}
             </div>
-            {isLoggedIn&&
+            {isLoggedIn &&
                 <div className={`logout-button ${showLogout ? 'active' : ''}`} onClick={handleLogout}>
                     <FontAwesomeIcon icon={faSignOutAlt} />
                 </div>

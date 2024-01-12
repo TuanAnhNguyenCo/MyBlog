@@ -192,7 +192,7 @@ function Home() {
             
             <hr style={{ marginBottom: "20px",marginTop:"20px" }} />
           
-            <PostComponent content={post} users={users} isUpdated={isUpdated} setIsUpdated={setIsUpdated } />
+            <PostComponent content={post} users={users} isUpdated={isUpdated} setIsUpdated={setIsUpdated} />
         </div>
     ));
 

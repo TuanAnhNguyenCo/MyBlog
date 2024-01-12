@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
-import { Modal, Avatar, Input, Comment, Button } from 'antd';
+import { faComment, faBars } from '@fortawesome/free-solid-svg-icons';
+import { Modal, Avatar, Input, Comment, Button, Dropdown, Space } from 'antd';
 import './comments.css'; // Import file CSS cho component
 import { useEffect } from 'react';
 
@@ -13,6 +13,20 @@ const PostComponent = ({ content, users, isUpdated, setIsUpdated }) => {
     const handleCommentInputChange = (event) => {
         setCommentInput(event.target.value);
     };
+    const items = [
+        {
+            label: (
+                <span onClick={(e) => handleDeleteComment(e )} >Delete</span>
+            ),
+            key: '0',
+        }]
+
+    const handleDeleteComment = (event) => {
+        event.preventDefault();
+        var id = localStorage.getItem("RemoveID")
+        console.log("delete ",id)
+    }
+
     const handleCommentSubmit = (event) => {
         if (event.key === 'Enter' && commentInput.trim() !== '') {
             // Thực hiện hàm xử lý gửi bình luận tại đây
@@ -78,7 +92,7 @@ const PostComponent = ({ content, users, isUpdated, setIsUpdated }) => {
                     </div>
 
                     <div dangerouslySetInnerHTML={{ __html: content.content }} />
-                    <div style={{textAlign:"center"}}>
+                    <div style={{ textAlign: "center" }}>
                         {content.img_url !== 'uploads/NULL' && (
                             <img src={content.img_url} alt={`Image for ${content.title}`} className="image-preview" />
                         )}
@@ -99,6 +113,27 @@ const PostComponent = ({ content, users, isUpdated, setIsUpdated }) => {
                         <div key={index} className="comment-container">
                             <img src="avatar.jpeg" alt="User Avatar" className="user-avatar" />
                             <div className="comment-content">
+                                <div style={{ marginLeft: "97%" }}>
+                                {localStorage.getItem("id") == content.user_id
+                                    ?
+                                    <Dropdown
+                                        placement='bottomLeft'
+                                        menu={{
+                                            items,
+                                        }}>
+                                        <a onClick={(e) => {
+                                            e.preventDefault();
+                                            localStorage.setItem("RemoveID", p[0])
+                                        }}>
+                                            <Space>
+                                                <FontAwesomeIcon icon={faBars}/>
+                                            </Space>
+                                        </a>
+                                    </Dropdown>
+                                    :
+                                    <></>
+                                    }
+                                    </div>
                                 <p style={{ marginTop: '-7px', fontWeight: 'bold' }}>{p[1]}</p>
                                 <p className="comment-text">{p[3]}</p>
                             </div>
@@ -131,7 +166,32 @@ const PostComponent = ({ content, users, isUpdated, setIsUpdated }) => {
             {content.comments.length > 0 ? (
                 <div className="comment-container">
                     <img src='avatar.jpeg' alt="User Avatar" className="user-avatar" />
+
                     <div className="comment-content">
+                        <div style={{ marginLeft: "97%" }}>
+
+                            {localStorage.getItem("id") == content.user_id
+                                ?
+                                <Dropdown
+                                    placement='bottomLeft'
+                                    menu={{
+                                        items,
+                                    }}>
+                                    <a onClick={(e) => {
+                                        e.preventDefault();
+                                        localStorage.setItem("RemoveID", content.comments[content.comments.length - 1][0])
+                                    }}>
+                                        <Space>
+                                            <FontAwesomeIcon icon={faBars}
+                                                
+                                            />
+                                        </Space>
+                                    </a>
+                                </Dropdown>
+                                :
+                                <></>
+                            }
+                        </div>
                         <p style={{ marginTop: '-7px', fontWeight: 'bold' }} >{content.comments[content.comments.length - 1][1]}</p>
                         <p className="comment-text">{content.comments[content.comments.length - 1][3]}</p>
                     </div>

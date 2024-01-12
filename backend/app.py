@@ -37,6 +37,7 @@ def getCommentByIDs(id):
                                     == cm[1]].values
         if len(account_info) > 0:
             cm[1] = str(account_info[0][1])
+            
 
     # Extend the comments_list with the updated comments
     comments_list.extend(matching_comments)

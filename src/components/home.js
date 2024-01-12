@@ -77,7 +77,7 @@ function Home() {
         }
         var formData = {
             user_id: localStorage.getItem('id'),
-            title: newBlogTitle,
+            title: "nothing",
             content: newBlogContent,
             img_url: img_url,
             audio_url: audio_url,
@@ -180,7 +180,6 @@ function Home() {
                 </span>
             </div>
             {console.log(post)}
-            <h3>{post.title}</h3>
             <div dangerouslySetInnerHTML={{ __html: post.content }} />
             {post.img_url !== "uploads/NULL" && (
                 <img src={post.img_url} alt={`Image for ${post.title}`} className="image-preview" />
@@ -202,12 +201,6 @@ function Home() {
             <h2>Welcome to the Blog</h2>
             <div className="create-blog-section">
 
-                <input
-                    type="text"
-                    placeholder="Enter your blog title..."
-                    value={newBlogTitle}
-                    onChange={(e) => setNewBlogTitle(e.target.value)}
-                />
                 <ReactQuill
                     placeholder="Write your new blog post here..."
                     value={newBlogContent}

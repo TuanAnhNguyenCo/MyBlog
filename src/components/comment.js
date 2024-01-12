@@ -10,11 +10,6 @@ const PostComponent = ({ content, users, isUpdated, setIsUpdated }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
 
-    // Xử lý sự kiện mousedown ngoài màn hình
-    // window.addEventListener("mousedown", () => {
-    //     setIsModalOpen(false)
-    // });
-
     const handleCommentInputChange = (event) => {
         setCommentInput(event.target.value);
     };
@@ -60,7 +55,6 @@ const PostComponent = ({ content, users, isUpdated, setIsUpdated }) => {
         return (
             <Modal
                 visible={isOpen}
-                title={content.title}
                 onOk={onClose}
                 onCancel={onClose}
                 width={800}

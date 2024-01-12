@@ -17,12 +17,13 @@ CORS(
 )
 
 
-accounts = pd.read_json("account.json")
-blogs = pd.read_json("blogs.json")
-comments = pd.read_json("comments.json")
+
 
 
 def getCommentByIDs(id):
+    accounts = pd.read_json("account.json")
+    blogs = pd.read_json("blogs.json")
+    comments = pd.read_json("comments.json")
 
     comments_list = []
 
@@ -47,6 +48,9 @@ def getCommentByIDs(id):
 
 @app.route('/api/blog', methods=['GET'])
 def hello():
+    accounts = pd.read_json("account.json")
+    blogs = pd.read_json("blogs.json")
+    comments = pd.read_json("comments.json")
     blog_list = []
     # Lấy số lượng dòng trong DataFrame
     num_rows = blogs.shape[0]
@@ -70,7 +74,11 @@ def hello():
 
 
 @app.route('/api/users', methods=['GET'])
+
 def getUsers():
+    accounts = pd.read_json("account.json")
+    blogs = pd.read_json("blogs.json")
+    comments = pd.read_json("comments.json")
     users = []
     for i, account in accounts.iterrows():
 
@@ -83,8 +91,15 @@ def getUsers():
     return jsonify(users=users)
 
 
+
+    
+
+
 @app.route('/api/login', methods=['POST'])
 def check_account():
+    accounts = pd.read_json("account.json")
+    blogs = pd.read_json("blogs.json")
+    comments = pd.read_json("comments.json")
     # Get account details from the request
     account_data = request.json
     if len(accounts.loc[(accounts['username'] == account_data['username']) & (accounts['password'] == str(account_data['password']))]) != 0:
@@ -105,6 +120,9 @@ def check_account():
 
 @app.route('/api/upload_file', methods=['POST'])
 def upload_file():
+    accounts = pd.read_json("account.json")
+    blogs = pd.read_json("blogs.json")
+    comments = pd.read_json("comments.json")
     try:
         files = request.files.getlist('files')
         save_folder = '/Users/tuananh/Desktop/Dev/my-blog-app/public/uploads/'
@@ -123,6 +141,9 @@ def upload_file():
 
 @app.route('/api/create-blog', methods=['POST'])
 def create_blog():
+    accounts = pd.read_json("account.json")
+    blogs = pd.read_json("blogs.json")
+    comments = pd.read_json("comments.json")
     base_url = "uploads/"
     # Retrieve data from the request
     blog_title = request.json.get('title')
@@ -148,7 +169,9 @@ def create_blog():
 
 @app.route('/api/create-comment', methods=['POST'])
 def create_comment():
-
+    accounts = pd.read_json("account.json")
+    blogs = pd.read_json("blogs.json")
+    comments = pd.read_json("comments.json")
     # Retrieve data from the request
     user_id = request.json.get('user_id')
     blog_id = request.json.get('blog_id')
@@ -171,7 +194,9 @@ def create_comment():
 
 @app.route('/api/create/account', methods=['POST'])
 def create_account():
-
+    accounts = pd.read_json("account.json")
+    blogs = pd.read_json("blogs.json")
+    comments = pd.read_json("comments.json")
     # Retrieve data from the request
     username = request.json.get('username')
 
@@ -186,6 +211,19 @@ def create_account():
     response = {'message': 'Account created successfully'}
     return jsonify(response)
 
+
+@app.route('/api/comments/remove', methods=['POST'])
+def removeComments():
+    id = request.json.get("id")
+    
+    accounts = pd.read_json("account.json")
+    blogs = pd.read_json("blogs.json")
+    comments = pd.read_json("comments.json")
+    
+    comments = comments.loc[comments['id'] != int(id)]
+    comments.to_json("comments.json")
+    response = {'message': 'Comment removed successfully'}
+    return jsonify(response)
 
 if __name__ == '__main__':
     app.run(debug=True)

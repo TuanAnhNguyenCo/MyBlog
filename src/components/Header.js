@@ -29,16 +29,18 @@ function Header() {
                     </>
                 )}
             </div>
-            <div className={`logout-button ${showLogout ? 'active' : ''}`} onClick={() => setShowLogout(!showLogout)}>
-                <FontAwesomeIcon icon={faSignOutAlt} />
-            </div>
-            {showLogout && (
-                <div className="logout-options">
+            {isLoggedIn&&
+                <div className={`logout-button ${showLogout ? 'active' : ''}`} onClick={handleLogout}>
+                    <FontAwesomeIcon icon={faSignOutAlt} />
+                </div>
+            }
+            {/* {showLogout && (
+                <div className="logout-options" onClick={handleLogout}>
                     <button onClick={handleLogout}>
                         <FontAwesomeIcon icon={faSignOutAlt} /> Logout
                     </button>
                 </div>
-            )}
+            )} */}
         </header>
     );
 }

@@ -17,22 +17,45 @@ CORS(
 )
 
 
-accounts = pd.read_csv("account.csv")
-blogs = pd.read_csv("blog.csv")
+accounts = pd.read_json("account.json")
+blogs = pd.read_json("blogs.json")
+comments = pd.read_json("comments.json")
+
+
+def getCommentByIDs(id):
+
+    comments_list = []
+
+    matching_comments = comments.loc[comments['blog_id']
+                                     == id].to_numpy().tolist()
+
+    # Iterate through the comments and update the username
+
+    for cm in matching_comments:
+        # print(cm[1])
+        account_info = accounts.loc[accounts['id']
+                                    == cm[1]].values
+        if len(account_info) > 0:
+            cm[1] = str(account_info[0])
+
+    # Extend the comments_list with the updated comments
+    comments_list.extend(matching_comments)
+
+    return comments_list
 
 
 @app.route('/api/blog', methods=['GET'])
 def hello():
     blog_list = []
     for i, blog in blogs.iterrows():
-
+       
         blog_list.append(
             {
                 'id': blog['id'],
                 'user_id': blog['user_id'],
                 'title': blog['title'],
                 'content': blog['content'],
-                'comment_id': blog['comment_id'],
+                'comments': getCommentByIDs(blog['id']),
                 # Replace with your actual URL
                 'img_url': blog['img_url'] if blog['img_url'] != "NULL" else "",
                 "audio_url": blog['audio_url'] if blog['audio_url'] != "NULL" else ""
@@ -108,16 +131,57 @@ def create_blog():
         'user_id':  request.json.get('user_id'),
         'title': blog_title,  # Replace with your actual title
         'content': blog_content,  # Replace with your actual content
-        'comment_id': [],
         'img_url': base_url + img_url,  # Replace with your actual URL
         "audio_url": base_url + audio_url
     })
-    blogs.to_csv("blog.csv", index=False)
+    blogs.to_json("blogs.json")
+   
 
     # Process the data and files here (e.g., store in a database)
 
     # Return a response indicating success or failure
     response = {'message': 'Blog post created successfully'}
+    return jsonify(response)
+
+
+@app.route('/api/create-comment', methods=['POST'])
+def create_comment():
+   
+    # Retrieve data from the request
+    user_id = request.json.get('user_id')
+    blog_id = request.json.get('blog_id')
+    content = request.json.get('content')
+   
+    comments.loc[len(comments)] = pd.Series({
+        'id': comments['id'].max() + 1 if len(comments) != 0 else 1,
+        'user_id':  int(user_id),
+        'blog_id': blog_id,  # Replace with your actual title
+        'content': content,  # Replace with your actual content        
+    })
+    comments.to_json("comments.json")
+
+    # Process the data and files here (e.g., store in a database)
+
+    # Return a response indicating success or failure
+    response = {'message': 'Blog post created successfully'}
+    return jsonify(response)
+
+
+@app.route('/api/create/account', methods=['POST'])
+def create_account():
+
+    # Retrieve data from the request
+    username = request.json.get('username')    
+   
+    if len(accounts.loc[accounts['username'] == username]) == 0:
+        accounts.loc[len(accounts)] = pd.Series({
+            'id': accounts['id'].max() + 1 if len(accounts) != 0 else 1,
+            'username':username,
+            "password":str(1)
+        })
+        accounts.to_json("account.json")
+
+    response = {'message': 'Account created successfully'}
     return jsonify(response)
 
 

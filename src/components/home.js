@@ -18,20 +18,8 @@ function Home() {
     const [files, setFiles] = useState([]);
     const [blogs, setBlogs] = useState([]);
     const [users, setUsers] = useState([]);
+    const [isUpdated, setIsUpdated] = useState(false)
     const [activeCommentView, setActiveCommentView] = useState(null);
-
-    const samplePost = {
-        id: 1,
-        comments: [
-            { id: 1, text: 'Comment 1' },
-            { id: 2, text: 'Comment 2' },
-            { id: 3, text: 'Comment 1' },
-            { id: 4, text: 'Comment 2' },
-            { id: 5, text: 'Comment 1' },
-            { id: 6, text: 'Comment 2' },
-           
-        ],
-    };
 
 
     const serverURL = 'http://127.0.0.1:5000/api/blog';
@@ -71,7 +59,7 @@ function Home() {
             });
 
 
-    }, [files]
+    }, [isUpdated]
     )
 
 
@@ -127,6 +115,7 @@ function Home() {
             .then((response) => response.json())
             .then((data) => {
                 setFiles([])
+                setIsUpdated(!isUpdated)
                 // Handle server response (e.g., display success message or error)
             })
             .catch((error) => {
@@ -204,7 +193,7 @@ function Home() {
             
             <hr style={{ marginBottom: "20px",marginTop:"20px" }} />
           
-            <PostComponent post={samplePost} content={post} users = {users} />
+            <PostComponent content={post} users={users} isUpdated={isUpdated} setIsUpdated={setIsUpdated } />
         </div>
     ));
 

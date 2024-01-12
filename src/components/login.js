@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import AuthContext from './AuthContext';
 import './login.css'; // Import your CSS file for styling
 import { useEffect } from 'react';
+import GoogleLoginButton from './gglogin';
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -13,7 +14,7 @@ function Login() {
 
         var us = localStorage.getItem("username")
         var ps = localStorage.getItem("password")
-        console.log(us,ps)
+        console.log(us, ps)
 
         if (us && ps) {
             handleLogin()
@@ -39,7 +40,7 @@ function Login() {
         };
         // Dummy account data
 
-        
+
         // Make an AJAX request using fetch
         fetch(serverURL, {
             method: 'POST',
@@ -92,6 +93,8 @@ function Login() {
                     handleLogin(e)
                 }
                 }>Login</button>
+                <p style={{textAlign:"center"}}>OR</p>
+                <GoogleLoginButton handleLogin={handleLogin} />
             </form>
         </div>
     );

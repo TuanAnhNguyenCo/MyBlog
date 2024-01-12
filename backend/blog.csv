@@ -1,5 +1,0 @@
-id,user_id,title,content,comment_id,img_url,audio_url
-1,1,Hello,<p>1</p>,[],uploads/NULL,uploads/NULL
-2,1,Hello,<p><strong><em>Hello</em></strong></p>,[],uploads/403577595_1788185134945111_5690275161953337863_n.jpg,uploads/NULL
-3,1,Nhạc,<p>Nhạc tết ae</p>,[],uploads/NULL,uploads/TetNhaLaTetNhat-BuiCongNam-13231304.mp3
-4,2,Xin chào anh em nha,<p>Hôm nay anh em ngủ nha</p>,[],uploads/403577595_1788185134945111_5690275161953337863_n.jpg,uploads/NULL
